@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Student Grade Report</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 40px;
+            background: #f9f9f9;
+        }
+        table {
+            border-collapse: collapse;
+            margin: 20px auto;
+            width: 90%;
+            max-width: 800px;
+        }
+        td, th {
+            border: 1px solid #444;
+            padding: 8px 12px;
+            text-align: center;
+        }
+        th {
+            background-color: gray;
+            color: black;
+        }
+        .summary-label {
+            background-color: lightgreen;
+            text-align: right;
+            font-weight: bold;
+        }
+        .summary-value {
+            background-color: lightgreen;
+            font-weight: bold;
+        }
+        .remarks-label {
+            background-color: yellow;
+            text-align: right;
+            font-weight: bold;
+        }
+        .remarks-value {
+            background-color: yellow;
+            font-weight: bold;
+        }
+        .report-title {
+            color: black;        
+            margin-top: 5px;
+        }
+    </style>
+</head>
+<body>
+
+<center>
+
+<p><b>Activity 3</b></p>
+<h2 class="report-title">Student Grade Report</h2>
+
+<table>
+    <tr>
+        <th>Subject</th>
+        <th>Instructor</th>
+        <th>Prelim</th>
+        <th>Midterm</th>
+        <th>Final</th>
+        <th>Remarks</th>
+    </tr>
+    <tr>
+        <td>HTML</td>
+        <td>Mr. Santos</td>
+        <td>89</td>
+        <td>90</td>
+        <td>91</td>
+        <td>Passed</td>
+    </tr>
+    <tr>
+        <td>CSS</td>
+        <td>Ms. Cruz</td>
+        <td>88</td>
+        <td>87</td>
+        <td>90</td>
+        <td>Passed</td>
+    </tr>
+    <tr>
+        <td>JavaScript</td>
+        <td>Mr. Reyes</td>
+        <td>85</td>
+        <td>86</td>
+        <td>88</td>
+        <td>Passed</td>
+    </tr>
+    <tr>
+        <td>Database</td>
+        <td>Ms. Lopez</td>
+        <td>90</td>
+        <td>92</td>
+        <td>91</td>
+        <td>Passed</td>
+    </tr>
+    <tr>
+        <td>Networking</td>
+        <td>Mr. Garcia</td>
+        <td>87</td>
+        <td>89</td>
+        <td>90</td>
+        <td>Passed</td>
+    </tr>
+
+    <tr>
+        <td colspan="5" class="summary-label">Average Grade</td>
+        <td class="summary-value">89</td>
+    </tr>
+    <tr>
+        <td colspan="5" class="remarks-label">General Remarks</td>
+        <td class="remarks-value">Passed</td>
+    </tr>
+</table>
+
+</center>
+
+</body>
+</html>
