@@ -2475,7 +2475,7 @@ a.info-value:hover { color: var(--primary); }
     white-space: normal;
     border-right: 2px solid var(--primary);
     animation: quote-blink 0.8s step-end infinite,
-               quote-glitch 5s ease-in-out infinite;
+               quote-glitch 2.5s ease-in-out infinite;
     position: relative;
 }
 
