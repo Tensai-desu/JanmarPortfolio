@@ -47,7 +47,7 @@ function randomRange(min, max) {
 }
 
 // Typewriter Effect
-const roles = ['UI/UX Designer', 'Frontend Developer', 'Creative Coder', 'Video Editor'];
+const roles = ['UI/UX Designer', 'Frontend Developer', 'Creative Coder', 'Video Editor', 'Music Producer'];
 let ri = 0, ci = 0, deleting = false;
 const typed = document.getElementById('heroTyped');
 
@@ -57,7 +57,7 @@ function typeWriter() {
         typed.textContent = current.slice(0, ++ci);
         if (ci === current.length) { 
             deleting = true; 
-            setTimeout(typeWriter, 1800); 
+            setTimeout(typeWriter, 1600); 
             return; 
         }
     } else {
@@ -67,8 +67,8 @@ function typeWriter() {
             ri = (ri + 1) % roles.length; 
         }
     }
-    setTimeout(typeWriter, deleting ? 60 : 100);
-}
+    setTimeout(typeWriter, deleting ? 50 : 90);
+}   
 
 if (typed) typeWriter();
 
@@ -82,21 +82,42 @@ const animations = [
     { hidden: 'opacity:0; transform:scale(0.8)', visible: 'opacity:1; transform:scale(1)' }
 ];
 
+// Set initial hidden state per element
 revealEls.forEach((el, i) => {
-    const anim = animations[i % animations.length];
-    el.style.transition = 'all 0.9s cubic-bezier(0.16, 1, 0.3, 1)';
+    el.style.opacity = '0';
+    el.style.transition = 'opacity 0.8s cubic-bezier(0.16,1,0.3,1), transform 0.8s cubic-bezier(0.16,1,0.3,1)';
+    const type = i % 4;
+    if (type === 0) el.style.transform = 'translateY(60px) scale(0.95)';
+    else if (type === 1) el.style.transform = 'translateX(-60px)';
+    else if (type === 2) el.style.transform = 'translateX(60px)';
+    else el.style.transform = 'scale(0.85)';
+    el.dataset.type = i % 4;
 });
 
 const observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
         if (entry.isIntersecting) {
             entry.target.style.opacity = '1';
-            entry.target.style.transform = 'translateY(0)';
+            entry.target.style.transform = 'translateY(0) translateX(0) scale(1)';
+        } else {
+            const type = Number(entry.target.dataset.type);
+            entry.target.style.opacity = '0';
+            if (type === 0) entry.target.style.transform = 'translateY(60px) scale(0.95)';
+            else if (type === 1) entry.target.style.transform = 'translateX(-60px)';
+            else if (type === 2) entry.target.style.transform = 'translateX(60px)';
+            else entry.target.style.transform = 'scale(0.85)';
         }
     });
 }, { threshold: 0.15 });
 
 revealEls.forEach(el => observer.observe(el));
+
+// Staggered children: skill cards, project cards, stat boxes
+document.querySelectorAll('.skills-grid, .project-grid, .about-stats').forEach(container => {
+    Array.from(container.children).forEach((child, i) => {
+        child.style.transitionDelay = `${i * 0.1}s`;
+    });
+});
 
 // Hamburger menu
 const hamburger = document.getElementById('navHamburger');
