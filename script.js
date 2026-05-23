@@ -8,6 +8,14 @@ document.addEventListener('mousemove', e => {
     my = e.clientY;
     cursor.style.left = mx + 'px';
     cursor.style.top  = my + 'px';
+    cursor.style.opacity = '1';
+    ring.style.opacity = '1';
+});
+
+// Keep cursor visible when over iframe overlay
+document.addEventListener('mouseleave', e => {
+    cursor.style.opacity = '0';
+    ring.style.opacity = '0';
 });
 
 (function loop() {
@@ -136,3 +144,58 @@ if (hamburger && navLinks) {
         });
     });
 }
+// Project card preview modal
+const modal = document.getElementById('projectModal');
+const modalIframe = document.getElementById('modalIframe');
+const modalTitle = document.getElementById('modalTitle');
+const modalLaunch = document.getElementById('modalLaunch');
+const modalLoader = document.getElementById('modalLoader');
+const modalClose = document.getElementById('modalClose');
+
+document.querySelectorAll('.project-card').forEach(card => {
+    card.style.cursor = 'pointer';
+    card.addEventListener('click', function(e) {
+        // Don't trigger if clicking the Launch Project link
+        if (e.target.closest('.project-link')) return;
+
+        const link = card.querySelector('.project-link');
+        const title = card.querySelector('.project-title');
+        if (!link || !title) return;
+
+        const url = link.getAttribute('href');
+
+        // Set modal content
+        modalTitle.textContent = title.textContent;
+        modalLaunch.href = url;
+        modalIframe.style.opacity = '0';
+        modalLoader.style.display = 'flex';
+        modalIframe.src = url;
+
+        // Show modal
+modal.style.display = 'flex';
+document.body.style.overflow = 'hidden';
+modalIframe.style.pointerEvents = 'none';
+
+        // Show iframe when loaded
+        modalIframe.onload = () => {
+            modalLoader.style.display = 'none';
+            modalIframe.style.opacity = '1';
+        };
+    });
+});
+
+// Close modal
+function closeModal() {
+    modal.style.display = 'none';
+    modalIframe.src = '';
+    document.body.style.overflow = '';
+    modalIframe.style.pointerEvents = 'auto';
+}
+
+modalClose.addEventListener('click', closeModal);
+modal.addEventListener('click', function(e) {
+    if (e.target === modal) closeModal();
+});
+document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') closeModal();
+});
