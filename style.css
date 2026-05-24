@@ -458,10 +458,12 @@ body {
     opacity: 0;
     transition: opacity 0.35s ease;
     cursor: pointer;
+    pointer-events: none;
 }
 
 .nav-drawer-backdrop.visible {
     opacity: 1;
+    pointer-events: auto;
 }
 
 .nav-drawer {
