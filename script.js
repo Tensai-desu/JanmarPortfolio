@@ -3,19 +3,22 @@ const cursor = document.getElementById('cursor');
 const ring   = document.getElementById('cursorRing');
 let mx = 0, my = 0, rx = 0, ry = 0;
 
-document.addEventListener('mousemove', e => {
-    mx = e.clientX; 
+// Use window instead of document to catch all mouse events
+window.addEventListener('mousemove', e => {
+    mx = e.clientX;
     my = e.clientY;
     cursor.style.left = mx + 'px';
     cursor.style.top  = my + 'px';
     cursor.style.opacity = '1';
     ring.style.opacity = '1';
-});
+}, true); // true = capture phase, fires before anything else
 
-// Keep cursor visible when over iframe overlay
-document.addEventListener('mouseleave', e => {
-    cursor.style.opacity = '0';
-    ring.style.opacity = '0';
+// Only hide when mouse leaves the entire browser window
+window.addEventListener('mouseout', e => {
+    if (!e.relatedTarget && !e.toElement) {
+        cursor.style.opacity = '0';
+        ring.style.opacity = '0';
+    }
 });
 
 (function loop() {
@@ -82,13 +85,6 @@ if (typed) typeWriter();
 
 // Intersection Observer for scroll animations
 const revealEls = document.querySelectorAll('.section-label, .section-title, .about-image, .about-text, .about-stats, .about-quote, .skill-card, .bar-item, .project-card, .stat-box');
-
-const animations = [
-    { hidden: 'opacity:0; transform:translateY(60px) scale(0.95)', visible: 'opacity:1; transform:translateY(0) scale(1)' },
-    { hidden: 'opacity:0; transform:translateX(-80px)', visible: 'opacity:1; transform:translateX(0)' },
-    { hidden: 'opacity:0; transform:translateX(80px)', visible: 'opacity:1; transform:translateX(0)' },
-    { hidden: 'opacity:0; transform:scale(0.8)', visible: 'opacity:1; transform:scale(1)' }
-];
 
 // Set initial hidden state per element
 revealEls.forEach((el, i) => {
@@ -171,10 +167,9 @@ document.querySelectorAll('.project-card').forEach(card => {
         modalLoader.style.display = 'flex';
         modalIframe.src = url;
 
-        // Show modal
+// Show modal
 modal.style.display = 'flex';
 document.body.style.overflow = 'hidden';
-modalIframe.style.pointerEvents = 'none';
 
         // Show iframe when loaded
         modalIframe.onload = () => {
@@ -184,12 +179,12 @@ modalIframe.style.pointerEvents = 'none';
     });
 });
 
-// Close modal
+
+
 function closeModal() {
     modal.style.display = 'none';
     modalIframe.src = '';
     document.body.style.overflow = '';
-    modalIframe.style.pointerEvents = 'auto';
 }
 
 modalClose.addEventListener('click', closeModal);
