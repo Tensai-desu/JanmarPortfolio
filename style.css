@@ -439,7 +439,11 @@ body {
 }
 
 /* Mobile burger — hidden on desktop */
-.nav-burger { display: none; }
+.nav-burger {
+    display: none;
+    position: relative;
+    z-index: 1100;
+}
 
 /* =============================================
    MOBILE DRAWER NAV
@@ -450,9 +454,10 @@ body {
     inset: 0;
     background: rgba(0,0,0,0.6);
     backdrop-filter: blur(4px);
-    z-index: 1500;
+    z-index: 1499;
     opacity: 0;
     transition: opacity 0.35s ease;
+    cursor: pointer;
 }
 
 .nav-drawer-backdrop.visible {
@@ -464,6 +469,7 @@ body {
     top: 0; right: 0;
     width: min(340px, 88vw);
     height: 100dvh;
+    height: 100vh;
     background: rgba(8, 11, 22, 0.97);
     border-left: 1px solid rgba(0, 229, 255, 0.12);
     z-index: 1600;
@@ -472,6 +478,7 @@ body {
     display: flex;
     flex-direction: column;
     overflow: hidden;
+    -webkit-overflow-scrolling: touch;
 }
 
 .nav-drawer.open {
@@ -3588,5 +3595,7 @@ body.light .edu-photo-title { color: #05080f; }
         width: 42px;
         height: 42px;
         font-size: 1rem;
+        z-index: 1300;
+        cursor: pointer !important;
     }
 }

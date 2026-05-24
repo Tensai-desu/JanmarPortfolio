@@ -89,10 +89,13 @@ const navBackdrop = document.getElementById('navBackdrop');
 const drawerClose = document.getElementById('navDrawerClose');
 
 function openDrawer() {
+    if (!navDrawer) return;
     navDrawer.classList.add('open');
-    navBackdrop.classList.add('visible');
-    navBurger && navBurger.classList.add('open');
-    navBurger && navBurger.setAttribute('aria-expanded', 'true');
+    if (navBackdrop) navBackdrop.classList.add('visible');
+    if (navBurger) {
+        navBurger.classList.add('open');
+        navBurger.setAttribute('aria-expanded', 'true');
+    }
     navDrawer.setAttribute('aria-hidden', 'false');
     document.body.style.overflow = 'hidden';
 }
@@ -204,7 +207,7 @@ if (typed) typeWriter();
 ============================================= */
 const revealEls = document.querySelectorAll(
     '.section-label, .section-title, .about-image, .about-text, ' +
-    '.about-stats, .about-quote, .skill-card, .bar-item, .project-card, .stat-box'
+    '.about-quote, .skill-card, .bar-item, .project-card'
 );
 
 revealEls.forEach((el, i) => {
@@ -236,7 +239,7 @@ const observer = new IntersectionObserver(entries => {
 
 revealEls.forEach(el => observer.observe(el));
 
-document.querySelectorAll('.skills-grid, .project-grid, .about-stats').forEach(container => {
+document.querySelectorAll('.skills-grid, .project-grid').forEach(container => {
     Array.from(container.children).forEach((child, i) => {
         child.style.transitionDelay = `${i * 0.1}s`;
     });
@@ -293,10 +296,12 @@ const themeToggle = document.getElementById('themeToggle');
 const themeIcon   = document.getElementById('themeIcon');
 
 /* Load saved preference */
-if (localStorage.getItem('theme') === 'light') {
-    document.body.classList.add('light');
-    themeIcon.classList.replace('fa-sun', 'fa-moon');
-}
+try {
+    if (localStorage.getItem('theme') === 'light') {
+        document.body.classList.add('light');
+        if (themeIcon) themeIcon.classList.replace('fa-sun', 'fa-moon');
+    }
+} catch(e) {}
 
 themeToggle && themeToggle.addEventListener('click', () => {
     const isLight = document.body.classList.toggle('light');
