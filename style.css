@@ -1195,7 +1195,6 @@ section {
     align-items: center;
     gap: 0.8rem;
     margin-bottom: 0.8rem;
-    animation: fade-up 1s 0.2s both;
 }
 
 .section-label::before {
